@@ -3,8 +3,6 @@ package com.techvum.login.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -49,7 +47,7 @@ public class AuthController {
 		JwtResponse response = new JwtResponse();
 
 		User user = userRepo.findByEmail(request.getGmail());
-		if (user != null && user.getStatus().equalsIgnoreCase("ACTIVE")) {
+		if (user != null) {
 //			if (passwordEncoder.matches(request.getPassw(), user.getPassword())) {
 			if (user.getPassword().equals(request.getPassw())) {
 
@@ -67,13 +65,7 @@ public class AuthController {
 			response.setUsernm(request.getGmail());
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		}
-		if (user.getStatus().equalsIgnoreCase("ACTIVE")) {
-			return new ResponseEntity<>(response, HttpStatus.OK);
-		} else {
-			response.setUsernm("USER INACTIVE!");
-			return new ResponseEntity<>(response, HttpStatus.OK);
-
-		}
+		return new ResponseEntity<>(response, HttpStatus.OK);
 
 	}
 }

@@ -14,45 +14,45 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.techvum.login.model.Books;
+import com.techvum.login.model.Blogs;
 import com.techvum.login.model.Input;
-import com.techvum.login.service.BooksService;
+import com.techvum.login.service.BlogsService;
 
 @RestController
 @RequestMapping("/v1/api")
 @CrossOrigin(origins = "http://localhost:4200/")
-public class BooksController {
+public class BlogsController {
 	
 	@Autowired
-	BooksService booksService;
+	BlogsService blogsService;
 
-	@GetMapping("/getAll")
+	@GetMapping("/getallblogs")
+//	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+	public List<Blogs> getAllblogs() {
+		return blogsService.getAllblogs();
+	}
+
+	@GetMapping("/getbyid/{blogid}")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
-	public List<Books> getAllbooks() {
-		return booksService.getAllbooks();
+	public Blogs getBlogs(@PathVariable long blogid) {
+		return blogsService.getBlogById(blogid);
 	}
 
-	@GetMapping("/getbyid/{bookid}")
+	@DeleteMapping("/deletebyid/{blogid}")
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	public void deleteBlog(@PathVariable long blogid) {
+		blogsService.delById(blogid);
+	}
+
+	@PostMapping("/createblog")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
-	public Books getBooks(@PathVariable long bookid) {
-		return booksService.getBookById(bookid);
+	public Blogs saveBlog(@RequestBody Input blogs) {
+		return blogsService.saveblog(blogs);
 	}
 
-	@DeleteMapping("/deletebyId/{bookid}")
-	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-	public void deleteBook(@PathVariable long bookid) {
-		booksService.delById(bookid);
-	}
-
-	@PostMapping("/create")
-	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-	public Books savebook(@RequestBody Input books) {
-		return booksService.save(books);
-	}
-
-	@PutMapping("/update/{id}")
-	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-	public Books update(@RequestBody Input books, @PathVariable long id) {
-		return booksService.update(books, id);
+	@PutMapping("/updateblog/{id}")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+	public Blogs updateBlog(@RequestBody Input blogs, @PathVariable long id) {
+		return blogsService.updateblog(blogs, id);
 	}
 }

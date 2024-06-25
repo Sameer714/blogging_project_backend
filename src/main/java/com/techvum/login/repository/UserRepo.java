@@ -9,11 +9,12 @@ import com.techvum.login.model.User;
 
 @Repository
 public interface UserRepo extends JpaRepository<User, Long> {
-	List<User> findAllByStatus(String status);
+//	List<User> findAllByStatus(String status);
+//	List<User> findAllByStatusAndRole(String status, String role);
+
 	List<User> findAll();
 
 	User findById(long id);
 	User findByUserName(String userName);
 	User findByEmail(String gmail);
-	List<User> findAllByStatusAndRole(String status, String role);
 }

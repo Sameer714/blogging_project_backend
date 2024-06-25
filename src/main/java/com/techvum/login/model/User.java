@@ -38,16 +38,16 @@ public class User implements UserDetails {
 	@Column(name = "role")
 	private String role;
 
-	@Column(name = "status")
-	private String status;
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
+//	@Column(name = "status")
+//	private String status;
+//
+//	public String getStatus() {
+//		return status;
+//	}
+//
+//	public void setStatus(String status) {
+//		this.status = status;
+//	}
 
 	public long getId() {
 		return id;
@@ -98,6 +98,7 @@ public class User implements UserDetails {
 		this.email = email;
 		this.role = role;
 	}
+	
 
 	public User() {
 	}

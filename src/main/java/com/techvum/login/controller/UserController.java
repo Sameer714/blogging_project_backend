@@ -23,19 +23,20 @@ import com.techvum.login.service.UserService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
+
 @RequestMapping("/v1/api")
 public class UserController {
 
 	@Autowired
 	UserService userService;
 
-	@GetMapping("/getAllUsers")
+	@GetMapping("/getallusers")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	public List<User> getAllusers() {
 		return userService.getAllusers();
 	}
 
-	@GetMapping("/getuserInfo/{id}")
+	@GetMapping("/getuserinfo/{id}")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	public User getUserinfo(@PathVariable long id) {
 		return userService.getUserinfo(id);
@@ -52,38 +53,29 @@ public class UserController {
 		try {
 			User saveUser = userService.saveUser(user);
 			if (saveUser != null) {
-				if (saveUser.getRole().equalsIgnoreCase("ROLE_ADMIN")) {
-					return ResponseEntity.status(HttpStatus.OK)
-							.body("{\"message\": \"" + "User Saved Successfully , Wait for Admin Approval!"
-									+ "\" ,  \"Success\": \"" + "true" + "\"}");
-				} else if (saveUser.getRole().equalsIgnoreCase("ROLE_USER")) {
 					return ResponseEntity.status(HttpStatus.OK).body(
 							"{\"message\": \"" + "User Saved Successfully" + "\" ,  \"Success\": \"" + "true" + "\"}");
-				}
+				
 			}
 		} catch (DuplicateUsernameException e) {
 			return ResponseEntity.status(HttpStatus.OK)
 					.body("{\"message\": \"" + e.getMessage() + "\" , \"Success\": \"" + "false" + "\"}");
 		}
-		return null;
+		return ResponseEntity.status(HttpStatus.OK).body(
+				"{\"message\": \"" + "User null?" + "\" ,  \"Success\": \"" + "false" + "\"}");
+		
 	}
 
-	@PutMapping("/Updateuser/{id}")
+	@PutMapping("/updateuser/{id}")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public ResponseEntity<String> updateUser(@RequestBody User user, @PathVariable long id)
 			throws DuplicateUsernameException {
 		try {
 			User saveUser = userService.updateUser(user, id);
 			if (saveUser != null) {
-				if (saveUser.getRole().equals("ROLE_ADMIN")) {
-					return ResponseEntity.status(HttpStatus.OK)
-							.body("{\"message\": \"" + "User Created Successfully , Wait for Admin Approval!"
-									+ "\" ,  \"Success\": \"" + "true" + "\"}");
-				} else if (saveUser.getRole().equals("ROLE_USER")) {
 					return ResponseEntity.status(HttpStatus.OK).body(
 							"{\"message\": \"" + "User Saved Successfully" + "\" ,  \"Success\": \"" + "true" + "\"}");
 				}
-			}
 		} catch (DuplicateUsernameException e) {
 			return ResponseEntity.status(HttpStatus.OK)
 					.body("{\"message\": \"" + e.getMessage() + "\" , \"Success\": \"" + "false" + "\"}");
@@ -91,21 +83,21 @@ public class UserController {
 		return null;
 	}
 	
-	@PostMapping("/changePass")
+	@PostMapping("/changepass")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	public ResponseEntity<String> changepass(@RequestBody Pass pass) {
 		return userService.changePass(pass.getEmail(), pass.getOldpass(), pass.getPass());
 	}
 
-	@GetMapping("/getAllUserToApprove")
-	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-	public List<User> getAllUserToApprove() {
-		return userService.getAllUserToApprove();
-	}
+//	@GetMapping("/getAllUserToApprove")
+//	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+//	public List<User> getAllUserToApprove() {
+//		return userService.getAllUserToApprove();
+//	}
 
-	@PutMapping("/updateStatus/{id}")
-	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-	public ResponseEntity<String> updateStatus(@PathVariable long id) {
-		return userService.updateStatus(id);
-	}
+//	@PutMapping("/updateStatus/{id}")
+//	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+//	public ResponseEntity<String> updateStatus(@PathVariable long id) {
+//		return userService.updateStatus(id);
+//	}
 }
