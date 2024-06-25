@@ -7,10 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.techvum.login.controller.PasswordChecker;
 import com.techvum.login.duplicate.DuplicateUsernameException;
@@ -18,7 +15,7 @@ import com.techvum.login.model.User;
 import com.techvum.login.repository.UserRepo;
 
 @Service
-@CrossOrigin(origins = "http://localhost:4200/")
+//@CrossOrigin(origins = "http://localhost:4200/")
 
 public class UserService implements UserDetailsService {
 
@@ -49,13 +46,8 @@ public class UserService implements UserDetailsService {
 			} else {
 				throw new DuplicateUsernameException("Username Already Exists", "Duplicate :");
 			}
-			if (user.getRole().equalsIgnoreCase("ADMIN")) {
-				u.setStatus("INACTIVE");
-			} else {
-				u.setStatus("ACTIVE");
-			}
 			u.setEmail(user.getEmail());
-			u.setRole("ROLE_" + user.getRole());
+			u.setRole("ROLE_" +"USER");
 			if (user.getPassword().isEmpty()) {
 				throw new DuplicateUsernameException("Enter Password!", "Invalid : ");
 
@@ -114,24 +106,24 @@ public class UserService implements UserDetailsService {
 		return userRepo.findAll();
 	}
 
-	public List<User> getAllUserToApprove() {
-		return userRepo.findAllByStatusAndRole("INACTIVE", "ROLE_ADMIN");
-	}
+//	public List<User> getAllUserToApprove() {
+//		return userRepo.findAllByStatusAndRole("INACTIVE", "ROLE_ADMIN");
+//	}
 
-	public ResponseEntity<String> updateStatus(long id) {
-		User user = userRepo.findById(id);
-		if (user.getStatus().equalsIgnoreCase("INACTIVE")) {
-			user.setStatus("ACTIVE");
-			userRepo.save(user);
-			return ResponseEntity.status(HttpStatus.OK)
-					.body("{\"message\": \"" + "Updated Successfully" + "\" ,  \"Success\": \"" + "true" + "\"}");
-		} else {
-			user.setStatus("INACTIVE");
-			userRepo.save(user);
-			return ResponseEntity.status(HttpStatus.OK)
-					.body("{\"message\": \"" + "Updated Successfully" + "\" ,  \"Success\": \"" + "true" + "\"}");
-		}
-	}
+//	public ResponseEntity<String> updateStatus(long id) {
+//		User user = userRepo.findById(id);
+//		if (user.getStatus().equalsIgnoreCase("INACTIVE")) {
+//			user.setStatus("ACTIVE");
+//			userRepo.save(user);
+//			return ResponseEntity.status(HttpStatus.OK)
+//					.body("{\"message\": \"" + "Updated Successfully" + "\" ,  \"Success\": \"" + "true" + "\"}");
+//		} else {
+//			user.setStatus("INACTIVE");
+//			userRepo.save(user);
+//			return ResponseEntity.status(HttpStatus.OK)
+//					.body("{\"message\": \"" + "Updated Successfully" + "\" ,  \"Success\": \"" + "true" + "\"}");
+//		}
+//	}
 
 	public ResponseEntity<String> changePass (String email, String old ,String Password) {
 		
@@ -139,10 +131,6 @@ public class UserService implements UserDetailsService {
 		if (user == null) {
 			return ResponseEntity.status(HttpStatus.OK).body("{\"message\": \""
 					+ "Email Doesnt Exist! , Create an Account now!" + "\" ,  \"Success\": \"" + "false" + "\"}");
-		}
-		if (user.getStatus().equalsIgnoreCase("INACTIVE")) {
-			return ResponseEntity.status(HttpStatus.OK)
-					.body("{\"message\": \"" + "Email Inactive!" + "\" ,  \"Success\": \"" + "false" + "\"}");
 		} else {
 			if(user.getPassword().equals(old)) {
 				user.setPass(Password);

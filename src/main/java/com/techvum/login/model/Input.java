@@ -2,28 +2,39 @@ package com.techvum.login.model;
 
 import java.util.Date;
 
+import jakarta.persistence.Column;
+
 public class Input {
 
 	
-    public String bookName;
+    public String blogTitle;
     public String authorName;
     public Date launchDate;
-    public String aboutBook;
+    public String aboutBlog;
+    public String content;
+
+    public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
     
-    public String getAboutBook() {
-		return aboutBook;
+    public String getAboutBlog() {
+		return aboutBlog;
 	}
 
-	public void setAboutBook(String aboutBook) {
-		this.aboutBook = aboutBook;
+	public void setAboutBlog(String aboutBlog) {
+		this.aboutBlog = aboutBlog;
 	}
 
-	public String getBookName() {
-        return bookName;
+	public String getBlogTitle() {
+        return blogTitle;
     }
 
-    public void setBookName(String bookName) {
-        this.bookName = bookName;
+    public void setBlogTitle(String blogTitle) {
+        this.blogTitle = blogTitle;
     }
 
     public String getAuthorName() {
@@ -43,13 +54,13 @@ public class Input {
     }
 
     public long getLaunchDateEpoch() {
-        return launchDate.getTime(); // Returns the number of milliseconds since January 1, 1970, 00:00:00 UTC
+        return launchDate.getTime(); 
     }
 
-    public Input(String bookName, String authorName, Date launchDate , String aboutBook) {
+    public Input(String blogTitle, String authorName, Date launchDate , String aboutBlog) {
         super();
-        this.aboutBook = aboutBook;
-        this.bookName = bookName;
+        this.aboutBlog = aboutBlog;
+        this.blogTitle = blogTitle;
         this.authorName = authorName;
         this.launchDate = launchDate;
     }
