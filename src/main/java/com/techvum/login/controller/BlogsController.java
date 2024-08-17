@@ -19,7 +19,7 @@ import com.techvum.login.model.Input;
 import com.techvum.login.service.BlogsService;
 
 @RestController
-@RequestMapping("/v1/api")
+@RequestMapping("v1/api")
 @CrossOrigin(origins = "http://localhost:4200/")
 public class BlogsController {
 	
