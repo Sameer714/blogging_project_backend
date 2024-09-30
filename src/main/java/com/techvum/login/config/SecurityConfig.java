@@ -31,6 +31,8 @@ public class SecurityConfig {
 						.requestMatchers(HttpMethod.POST, "/v1/api/otp/send").permitAll()
 						.requestMatchers(HttpMethod.POST, "/v1/api/otp/check/otp").permitAll()
 						.requestMatchers(HttpMethod.GET, "/v1/api/getallblogs").permitAll()
+						.requestMatchers(HttpMethod.POST, "/v2/api/send").permitAll()
+
 						.requestMatchers("/auth/login").permitAll()
 
 						.anyRequest().authenticated())

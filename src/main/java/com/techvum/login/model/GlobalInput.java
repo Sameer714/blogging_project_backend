@@ -28,9 +28,6 @@ public class GlobalInput {
 		
 	}
 	
-	
-	
-	
 	public class Messg {
 		private String fail ;
 
@@ -90,5 +87,48 @@ public class GlobalInput {
 		}
 	}
 	
-	
+	public static class Emailbody {
+		private String from;
+		private String name;
+		private String sub;
+		private String content;
+		public String getFrom() {
+			return from;
+		}
+		public void setFrom(String from) {
+			this.from = from;
+		}
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
+		public String getSub() {
+			return sub;
+		}
+		public void setSub(String sub) {
+			this.sub = sub;
+		}
+		public String getContent() {
+			return content;
+		}
+		public void setContent(String content) {
+			this.content = content;
+		}
+		@Override
+		public String toString() {
+			return "Emailbody [from=" + from + ", name=" + name + ", sub=" + sub + ", content=" + content + "]";
+		}
+		public Emailbody(String from, String name, String sub, String content) {
+			super();
+			this.from = from;
+			this.name = name;
+			this.sub = sub;
+			this.content = content;
+		}
+		public Emailbody() {
+			super();
+		}
+	}
 }

@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.techvum.login.model.Blogs;
+import com.techvum.login.model.GlobalInput;
 import com.techvum.login.model.Input;
+import com.techvum.login.model.GlobalInput.Emailbody;
 import com.techvum.login.service.BlogsService;
 
 @RestController
@@ -49,6 +51,7 @@ public class BlogsController {
 	public Blogs saveBlog(@RequestBody Input blogs) {
 		return blogsService.saveblog(blogs);
 	}
+	
 
 	@PutMapping("/updateblog/{id}")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")

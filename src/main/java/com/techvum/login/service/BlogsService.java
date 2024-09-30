@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.techvum.login.model.Blogs;
+import com.techvum.login.model.GlobalInput;
+import com.techvum.login.model.GlobalInput.Emailbody;
 import com.techvum.login.model.Input;
 import com.techvum.login.repository.BlogRepo;
 
