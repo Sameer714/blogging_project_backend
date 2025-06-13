@@ -18,6 +18,7 @@ import com.techvum.login.security.JwtHelper;
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/auth")
+
 public class AuthController {
 	private String token;
 
@@ -66,6 +67,5 @@ public class AuthController {
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		}
 		return new ResponseEntity<>(response, HttpStatus.OK);
-
 	}
 }

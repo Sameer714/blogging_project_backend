@@ -1,6 +1,5 @@
 package com.techvum.login.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -14,7 +13,7 @@ public class ContactSender {
     @org.springframework.beans.factory.annotation.Value("${spring.mail.username}")
     private String fromMail;
     
-    @Autowired 
+
     public ContactSender(JavaMailSender mailSender) {
         this.mailSender = mailSender;
     }

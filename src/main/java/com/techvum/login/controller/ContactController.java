@@ -16,12 +16,8 @@ import com.techvum.login.service.ContactSender;
 
 public class ContactController {
 	
-	private final ContactSender contactSender;
-
-    @Autowired
-    public ContactController(ContactSender contactSender) {
-        this.contactSender = contactSender;
-    }
+	@Autowired
+	private ContactSender contactSender;
 
     @PostMapping("/send")
     public ResponseEntity<String> sendContactForm(@RequestBody Emailbody emailbody) {
